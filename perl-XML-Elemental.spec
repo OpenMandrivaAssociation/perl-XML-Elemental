@@ -17,6 +17,7 @@ Buildrequires:  perl-devel
 Buildrequires:  perl(XML::SAX)
 Buildrequires:  perl(Class::Accessor)
 BuildArch:      noarch
+BuildRoot:      %{_tmppath}/%{name}-%{version}
 
 %description
 XML::Elemental is a SAX-based package for easily parsing XML documents into a
