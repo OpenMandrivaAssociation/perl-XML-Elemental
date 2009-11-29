@@ -1,23 +1,24 @@
-%define module  XML-Elemental
-%define name    perl-%{module}
-%define version 2.1
-%define release %mkrel 5
+%define upstream_name    XML-Elemental
+%define upstream_version 2.11
 
-Name:           %{name}
-Version:        %{version}
-Release:        %{release}
-Summary:        Simplistic and perlish handling of XML data
-License:        GPL or Artistic
-Group:          Development/Perl
-Url:            http://search.cpan.org/dist/%{module}/
-Source:         http://www.cpan.org/modules/by-module/XML/%{module}-%{version}.tar.bz2
+Name:       perl-%{upstream_name}
+Version:    %perl_convert_version %{upstream_version}
+Release:    %mkrel 1
+
+Summary:    Simplistic and perlish handling of XML data
+License:    GPL+ or Artistic
+Group:      Development/Perl
+Url:        http://search.cpan.org/dist/%{upstream_name}/
+Source0:    http://www.cpan.org/modules/by-module/XML/%{upstream_name}-%{upstream_version}.tar.gz
+
 %if %{mdkversion} < 1010
 Buildrequires:  perl-devel
 %endif
-Buildrequires:  perl(XML::SAX)
 Buildrequires:  perl(Class::Accessor)
+Buildrequires:  perl(XML::SAX)
+
 BuildArch:      noarch
-BuildRoot:      %{_tmppath}/%{name}-%{version}
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 
 %description
 XML::Elemental is a SAX-based package for easily parsing XML documents into a
@@ -34,14 +35,14 @@ was refactored to take advantage of any parser supporting SAX that includes the
 pure perl option that ships with XML::SAX.
 
 %prep
-%setup -q -n %{module}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
 %make
 
 %check
-%{__make} test
+%make test
 
 %install
 rm -rf %{buildroot} 
@@ -55,5 +56,3 @@ rm -rf %{buildroot}
 %doc Changes README
 %{perl_vendorlib}/XML
 %{_mandir}/man3*/*
-
-
