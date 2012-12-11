@@ -1,24 +1,21 @@
 %define upstream_name    XML-Elemental
 %define upstream_version 2.11
 
-Name:       perl-%{upstream_name}
-Version:    %perl_convert_version %{upstream_version}
-Release:    %mkrel 1
+Name:		perl-%{upstream_name}
+Version:	%perl_convert_version %{upstream_version}
+Release:	2
 
-Summary:    Simplistic and perlish handling of XML data
-License:    GPL+ or Artistic
-Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}/
-Source0:    http://www.cpan.org/modules/by-module/XML/%{upstream_name}-%{upstream_version}.tar.gz
+Summary:	Simplistic and perlish handling of XML data
+License:	GPL+ or Artistic
+Group:		Development/Perl
+Url:		http://search.cpan.org/dist/%{upstream_name}/
+Source0:	http://www.cpan.org/modules/by-module/XML/%{upstream_name}-%{upstream_version}.tar.gz
 
-%if %{mdkversion} < 1010
-Buildrequires:  perl-devel
-%endif
-Buildrequires:  perl(Class::Accessor)
-Buildrequires:  perl(XML::SAX)
+BuildRequires:	perl-devel
+BuildRequires:	perl(Class::Accessor)
+BuildRequires:	perl(XML::SAX)
 
-BuildArch:      noarch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
+BuildArch:	noarch
 
 %description
 XML::Elemental is a SAX-based package for easily parsing XML documents into a
@@ -38,21 +35,55 @@ pure perl option that ships with XML::SAX.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make
 
 %check
 %make test
 
 %install
-rm -rf %{buildroot} 
 %makeinstall_std
 
-%clean 
-rm -rf %{buildroot} 
-
 %files
-%defattr(-,root,root)
 %doc Changes README
 %{perl_vendorlib}/XML
 %{_mandir}/man3*/*
+
+%changelog
+* Sun Nov 29 2009 Jérôme Quelin <jquelin@mandriva.org> 2.110.0-1mdv2010.1
++ Revision: 471056
+- update to 2.11
+
+* Fri Sep 04 2009 Thierry Vignaud <tv@mandriva.org> 2.1-5mdv2010.0
++ Revision: 430663
+- rebuild
+
+* Fri Aug 01 2008 Thierry Vignaud <tv@mandriva.org> 2.1-4mdv2009.0
++ Revision: 258840
+- rebuild
+
+* Thu Jul 24 2008 Thierry Vignaud <tv@mandriva.org> 2.1-3mdv2009.0
++ Revision: 246728
+- rebuild
+
+* Tue Jan 15 2008 Guillaume Rousse <guillomovitch@mandriva.org> 2.1-1mdv2008.1
++ Revision: 152903
+- update to new version 2.1
+- update to new version 2.1
+
+* Fri Dec 21 2007 Olivier Blin <oblin@mandriva.com> 2.0-1mdv2008.1
++ Revision: 136365
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+
+* Thu Mar 15 2007 Guillaume Rousse <guillomovitch@mandriva.org> 2.0-1mdv2007.1
++ Revision: 144129
+- fix build dependencies
+- Imported perl-XML-Elemental-2.0-1mdv2007.1 into SVN repository.
+
+* Thu Mar 15 2007 Guillaume Rousse <guillomovitch@mandriva.org> 2.0-1mdv2007.1
+- first mdv release
+
